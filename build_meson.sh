@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#provides variables export according to selected architecture
 echo Select x32 or x64 mesa build
 
 read mesa_build
@@ -21,16 +22,20 @@ else
    exit
 fi
 
+#provides folder name which includes git tag and current date
 echo Provide a folder name please
 
 read foldername
-current_time=$(date "+%d.%m")
-foldername1=$foldername-$current_time
+cd /home/den/repositories/mesa/
+
+mesa_hash=git rev-parse --short HEAD
+current_date=$(date "+%d.%m")
+foldername1=$foldername-$mesa_hash-$current_date
 
 echo Library will be installed into $PATH_TO_LIB/$foldername1
 #set -x			# activate debugging from here
-cd /home/den/repositories/mesa/
 
+#checks for previously built folders and clean them if they exist and then builds libs
 if [ -d "mbuild64" ]
 then
    rm -rf mbuild64/
