@@ -88,4 +88,6 @@ then
     export LD_PRELOAD=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name libGL.so.1)
     export LIBGL_DRIVERS_PATH=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name dri)
     echo "Export was successfull"
+    echo $LD_PRELOAD
+    echo $LIBGL_DRIVERS_PATH
 fi
