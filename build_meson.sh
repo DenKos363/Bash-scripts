@@ -5,11 +5,11 @@ test -f $filename || touch $filename
 source $(dirname "$0")/config
 if [ -z "$MESA_PATH" ]  ||  [ -z "$MESA_OUTPUT_PATH_x32" ]  ||  [ -z "$MESA_OUTPUT_PATH_x64" ]
 then
-    echo provide absolute path to local mesa repository
+    echo "provide absolute path to local mesa repository"
     read MESA_PATH
-    echo provide desired pathes to x32 mesa version output
+    echo "provide desired pathes to x32 mesa version output"
     read MESA_OUTPUT_PATH_x32
-    echo provide desired pathes to x64 mesa version output
+    echo "provide desired pathes to x64 mesa version output"
     read MESA_OUTPUT_PATH_x64
     echo "MESA_PATH=$MESA_PATH" >> $(dirname "$0")/config
     echo "MESA_OUTPUT_PATH_x32=$MESA_OUTPUT_PATH_x32" >> $(dirname "$0")/config
@@ -19,7 +19,7 @@ else
 fi
 
 #provides variables export according to selected architecture
-echo Select x32 or x64 mesa build
+echo "Select x32 or x64 mesa build"
 read mesa_build
 
 if [ $mesa_build = x64 ]
@@ -43,7 +43,7 @@ mesa_hash=$(git rev-parse --short HEAD)
 current_date=$(date "+%d.%m")
 foldername1=$mesa_version-$mesa_hash-$current_date-DEBUG
 
-echo Library will be installed into $PATH_TO_LIB/$foldername1
+echo "Library will be installed into $PATH_TO_LIB/$foldername1"
 
 #checks for previously built folders and clean them if they exist and then builds libs
 git clean -dfx
@@ -87,4 +87,5 @@ if [ $answer = yes ]
 then
     export LD_PRELOAD=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name libGL.so.1)
     export LIBGL_DRIVERS_PATH=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name dri)
+    echo "Export was successfull"
 fi
