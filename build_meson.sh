@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# source $(dirname "$0")/build_meson.sh
 filename=$(dirname "$0")/config
 test -f $filename || touch $filename
 source $(dirname "$0")/config
@@ -86,8 +87,9 @@ read answer
 if [ $answer = yes ]
 then
     export LD_PRELOAD=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name libGL.so.1)
-    export LIBGL_DRIVERS_PATH=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name dri)
-    echo "Export was successfull"
     echo $LD_PRELOAD
+    export LIBGL_DRIVERS_PATH=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name dri)
     echo $LIBGL_DRIVERS_PATH
+    echo "Export was successfull"
 fi
+
