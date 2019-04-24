@@ -42,7 +42,7 @@ mesa_version=$(cat VERSION)
 
 mesa_hash=$(git rev-parse --short HEAD)
 current_date=$(date "+%d.%m")
-foldername1=$mesa_version-$mesa_hash-$current_date-DEBUG
+foldername1=$mesa_version-$current_date-$mesa_hash-DEBUG
 
 echo "Library will be installed into $PATH_TO_LIB/$foldername1"
 
@@ -79,17 +79,25 @@ else
    -Dd_ndebug=false \
    --prefix=$PATH_TO_LIB/$foldername1 ./mbuild32/
    ninja -C ./mbuild32/ install
-#set +x			# stop debugging from here
+# set +x			# stop debugging from here
 fi
 
 echo "Do you want to export env variables? Type yes or no."
 read answer
-if [ $answer = yes ]
+if [ $answer = yes ] && [ $mesa_build = x64 ]
 then
     export LD_PRELOAD=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name libGL.so.1)
     echo $LD_PRELOAD
     export LIBGL_DRIVERS_PATH=$(find $MESA_OUTPUT_PATH_x64/$foldername1/ -name dri)
     echo $LIBGL_DRIVERS_PATH
-    echo "Export was successfull"
+    echo "Export of x64 libs was successfull"
+elif
+    [ $answer = yes ] && [ $mesa_build = x32 ]
+then
+    export LD_PRELOAD=$(find $MESA_OUTPUT_PATH_x32/$foldername1/ -name libGL.so.1)
+    echo $LD_PRELOAD
+    export LIBGL_DRIVERS_PATH=$(find $MESA_OUTPUT_PATH_x32/$foldername1/ -name dri)
+    echo $LIBGL_DRIVERS_PATH
+    echo "Export of x32 libs was successfull"
 fi
 
