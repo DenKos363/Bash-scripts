@@ -55,8 +55,8 @@ then
    -Dbuildtype=debug \
    -Dvalgrind=false \
    -Ddri-drivers=i965 \
-   -Dgallium-drivers= \
-   -Dvulkan-drivers= \
+   -Dgallium-drivers=iris \
+   -Dvulkan-drivers=intel \
    -Dgallium-omx="disabled" \
    -Dplatforms=x11,drm,surfaceless \
    -Dtools=intel \
@@ -71,8 +71,8 @@ else
    -Dbuildtype=debug \
    -Dvalgrind=false \
    -Ddri-drivers=i965 \
-   -Dgallium-drivers= \
-   -Dvulkan-drivers= \
+   -Dgallium-drivers=iris \
+   -Dvulkan-drivers=intel \
    -Dgallium-omx="disabled" \
    -Dplatforms=x11,drm,surfaceless \
    -Dtools=intel \
