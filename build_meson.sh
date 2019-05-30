@@ -51,34 +51,36 @@ git clean -dfx
 
 if [ $mesa_build = x64 ]
 then
-   meson \
+   meson setup . mbuild_dbg_x64 \
    -Dbuildtype=debug \
+   -Dprefix=$PATH_TO_LIB/$foldername1 \
    -Dvalgrind=false \
    -Ddri-drivers=i965 \
-   -Dgallium-drivers=iris \
+   -Dgallium-drivers=iris,swrast \
    -Dvulkan-drivers=intel \
    -Dgallium-omx="disabled" \
    -Dplatforms=x11,drm,surfaceless \
-   -Dtools=intel \
-   -Dd_ndebug=false \
-   --prefix=$PATH_TO_LIB/$foldername1 ./mbuild64/
-   ninja -C ./mbuild64/ install
+   -Dtools=intel
+	ninja -C ./mbuild_dbg_x64/ install
 else
    export CC="gcc -m32"
    export CXX="g++ -m32"
    export LDFLAGS="-O0 -ggdb3 -m32"
-   meson \
+   meson setup . mbuild_dbg_x32 \
    -Dbuildtype=debug \
+   -Dprefix=$PATH_TO_LIB/$foldername1 \
    -Dvalgrind=false \
    -Ddri-drivers=i965 \
    -Dgallium-drivers=iris \
    -Dvulkan-drivers=intel \
    -Dgallium-omx="disabled" \
    -Dplatforms=x11,drm,surfaceless \
-   -Dtools=intel \
-   -Dd_ndebug=false \
-   --prefix=$PATH_TO_LIB/$foldername1 ./mbuild32/
-   ninja -C ./mbuild32/ install
+   -Dtools=intel
+   ninja -C ./mbuild_dbg_x32/ install
+   unset CC
+   unset CXX
+   unset LDFLAGS
+
 # set +x			# stop debugging from here
 fi
 
